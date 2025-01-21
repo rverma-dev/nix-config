@@ -28,10 +28,11 @@
       eza # Ls
       git # Version Control
       mas # Mac App Store $ mas search <app>
-      ranger # File Manager
-      tldr # Help
       wget # Download
       zsh-powerlevel10k # Prompt
+      jq
+      nodePackages.typescript
+      nodejs
     ];
   };
 
@@ -44,25 +45,25 @@
       cleanup = "zap";
     };
     casks = [
-      "aldente"
-      "appcleaner"
-      "firefox"
-      "jellyfin-media-player"
-      "moonlight"
-      "obs"
-      "prusaslicer"
-      "raycast"
-      "stremio"
-      "vlc"
-      # "canon-eos-utility"
     ];
-    masApps = {
-      "wireguard" = 1451685025;
+    masApps = {    
     };
   };
 
   home-manager.users.${vars.user} = {
     home.stateVersion = "22.05";
+    
+    programs.git = {
+      enable = true;
+      userName = "Rohit Verma";  # Replace with your name
+      userEmail = "rohit.verma@jupiter.money";  # Replace with your email
+      
+      extraConfig = {
+        init.defaultBranch = "main";
+        pull.rebase = true;
+        push.autoSetupRemote = true;
+      };
+    };
   };
 
   services.nix-daemon.enable = true;

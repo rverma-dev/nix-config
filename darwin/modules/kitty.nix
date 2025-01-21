@@ -63,7 +63,7 @@
       };
       ".config/kitty/startup.conf" = {
         text = ''
-          cd /Users/matthias/
+          cd /Users/rohitverma/
         '';
       };
     };

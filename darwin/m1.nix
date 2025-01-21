@@ -12,6 +12,9 @@
 {
   imports = import (./modules);
 
+  # Enable TouchID for sudo authentication
+  security.pam.enableSudoTouchIdAuth = true;
+
   aerospace.enable = true;
 
   environment = {
@@ -21,32 +24,12 @@
 
   homebrew = {
     casks = [
-      "adobe-creative-cloud"
-      "autodesk-fusion"
-      # "bettertouchtool"
-      # "darktable"
-      "deluge"
-      "docker"
-      "docker-toolbox"
-      "garmin-express"
-      "google-chrome"
-      # "obsidian"
-      "openmtp"
-      "r"
-      "rstudio"
-      "visual-studio-code"
-      "upscayl"
-      "ultimaker-cura"
-      "xnviewmp"
+      "obsidian"
     ];
     masApps = {
-      # "FileZilla Pro - FTP and Client" = 1298486723;
-      # "FileZilla Pro RemoteDrive" = -2087754162;
       "Keynote" = 409183694;
-      "Microsoft Remote Desktop" = 1295203466;
       "Numbers" = 409203825;
       "Pages" = 409201541;
-      "Xcode" = 497799835;
     };
   };
 
@@ -61,7 +44,7 @@
         # "com.apple.keyboard.fnState" = true;
       };
       dock = {
-        autohide = true;
+        autohide = false;
         autohide-delay = 0.2;
         autohide-time-modifier = 0.1;
         magnification = true;

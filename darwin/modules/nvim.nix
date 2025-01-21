@@ -1,7 +1,7 @@
 { config, lib, system, pkgs, stable, vars, ... }:
 
 let
-  colors = import ../theming/colors.nix;
+  colors = import ./theming/colors.nix;
 
   nvim-spell-nl-utf8-dictionary = builtins.fetchurl {
     url = "https://ftp.nluug.nl/vim/runtime/spell/nl.utf-8.spl";
