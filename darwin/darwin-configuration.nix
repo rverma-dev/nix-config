@@ -29,10 +29,16 @@
       git # Version Control
       mas # Mac App Store $ mas search <app>
       wget # Download
-      zsh-powerlevel10k # Prompt
       jq
       nodePackages.typescript
       nodejs
+      colima
+      docker
+      docker-compose
+      docker-credential-helpers
+      awscli2
+      kubectl
+      just
     ];
   };
 
@@ -45,6 +51,7 @@
       cleanup = "zap";
     };
     casks = [
+      "cursor"
     ];
     masApps = {    
     };

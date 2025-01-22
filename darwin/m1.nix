@@ -19,12 +19,14 @@
 
   environment = {
     systemPackages = with pkgs; [
+      zsh-powerlevel10k # Prompt
     ];
   };
 
   homebrew = {
     casks = [
       "obsidian"
+      "chatgpt"
     ];
     masApps = {
       "Keynote" = 409183694;
@@ -47,13 +49,25 @@
         autohide = false;
         autohide-delay = 0.2;
         autohide-time-modifier = 0.1;
-        magnification = true;
+        magnification = false;
         mineffect = "scale";
         # minimize-to-application = true;
         orientation = "bottom";
         showhidden = false;
         show-recents = false;
-        tilesize = 20;
+        tilesize = 40;
+        persistent-apps = [
+          "/System/Applications/Launchpad.app"
+          "/Applications/Safari.app"
+          "/Applications/Obsidian.app"
+          "/Applications/Google Chrome.app"
+          "/Applications/Cursor.app"
+          "/Applications/kitty.app"
+          "/Applications/ChatGPT.app"
+          "/System/Applications/System Settings.app"
+          "/System/Applications/iPhone Mirroring.app"
+        ];
+        persistent-others = ["/Users/${vars.user}/Downloads"];
       };
       finder = {
         ShowPathbar = true;

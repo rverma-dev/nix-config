@@ -13,7 +13,7 @@
   ./aerospace.nix
   ./kitty.nix
   ./skhd.nix
-  ./yabai.nix
   ./zsh.nix
   ./nvim.nix
+  ./aliases.nix
 ]
