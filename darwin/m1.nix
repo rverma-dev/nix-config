@@ -25,7 +25,7 @@
 
   homebrew = {
     casks = [
-      "obsidian"
+      "cursor"
       "chatgpt"
     ];
     masApps = {
@@ -59,10 +59,11 @@
         persistent-apps = [
           "/System/Applications/Launchpad.app"
           "/Applications/Safari.app"
-          "/Applications/Obsidian.app"
+          "/System/Applications/Calendar.app"
           "/Applications/Google Chrome.app"
+          "/Applications/Nix Apps/Obsidian.app"
+          "/Applications/Nix Apps/kitty.app"
           "/Applications/Cursor.app"
-          "/Applications/kitty.app"
           "/Applications/ChatGPT.app"
           "/System/Applications/System Settings.app"
           "/System/Applications/iPhone Mirroring.app"

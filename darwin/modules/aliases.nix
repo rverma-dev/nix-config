@@ -1,22 +1,24 @@
 # Aliases for shell commands
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 {
-  programs.zsh = {
-    enable = true;
-    initExtra = ''
-      # Docker Aliases
-      alias d="docker"
-      alias dc="docker-compose"
+  home-manager.users.${vars.user} = {
+    programs.zsh = {
+      enable = true;
+      shellAliases = {
+        
+        # Docker Aliases
+        d = "docker";
+        dc = "docker-compose";
 
-      # Kubernetes Aliases
-      alias k="kubectl"
-      alias kgp="kubectl get pods"
-      alias kgs="kubectl get services"
-      alias kcu="kubectl config use-context"
-      alias kcu="kubectl config use-context"
-      alias kcg="kubectl config get-contexts"
-      alias kcd="kubectl config delete-context"
-    '';
+        # Kubernetes Aliases
+        k = "kubectl";
+        kgp = "kubectl get pods";
+        kgs = "kubectl get services";
+        kcu = "kubectl config use-context";
+        kcg = "kubectl config get-contexts";
+        kcd = "kubectl config delete-context";
+      };
+    };
   };
 } 

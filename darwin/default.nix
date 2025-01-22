@@ -8,7 +8,7 @@
 #       └─ <host>.nix
 #
 
-{ inputs, nixpkgs, nixpkgs-stable, darwin, home-manager, nixvim, vars, ... }:
+{ inputs, nixpkgs, nixpkgs-stable, darwin, home-manager, nixvim, vars, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle, ... }:
 
 let
   inherit (darwin.lib) darwinSystem;
@@ -40,9 +40,23 @@ in
         ./m1.nix
         nixvim.nixDarwinModules.nixvim
         home-manager.darwinModules.home-manager
+        nix-homebrew.darwinModules.nix-homebrew
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          
+          # Homebrew Configuration
+          nix-homebrew = {
+            enable = true;
+            enableRosetta = true;
+            user = "${vars.user}";
+            autoMigrate = true;
+            taps = {
+              "homebrew/homebrew-core" = homebrew-core;
+              "homebrew/homebrew-cask" = homebrew-cask;
+              "homebrew/homebrew-bundle" = homebrew-bundle;
+            };
+          };
         }
       ];
     };

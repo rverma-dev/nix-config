@@ -27,6 +27,25 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Homebrew Management
+    nix-homebrew = {
+      url = "github:zhaofengli-wip/nix-homebrew";
+    };
+
+    # Homebrew Taps
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
+
     # NUR Community Packages
     nur = {
       url = "github:nix-community/NUR";
@@ -39,7 +58,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, darwin, nur, nixvim, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, darwin, nur, nixvim, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle, ... }:
     let
       # Variables Used In Flake
       vars = {
@@ -53,7 +72,7 @@
       darwinConfigurations = (
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager darwin nur nixvim vars;
+          inherit inputs nixpkgs nixpkgs-stable home-manager darwin nur nixvim vars nix-homebrew homebrew-core homebrew-cask homebrew-bundle;
         }
       );
     };

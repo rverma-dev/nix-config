@@ -39,6 +39,8 @@
       awscli2
       kubectl
       just
+      # ui packages
+      obsidian
     ];
   };
 
@@ -51,20 +53,20 @@
       cleanup = "zap";
     };
     casks = [
-      "cursor"
+      
     ];
-    masApps = {    
+    masApps = {
     };
   };
 
   home-manager.users.${vars.user} = {
     home.stateVersion = "22.05";
-    
+
     programs.git = {
       enable = true;
       userName = "Rohit Verma";  # Replace with your name
       userEmail = "rohit.verma@jupiter.money";  # Replace with your email
-      
+
       extraConfig = {
         init.defaultBranch = "main";
         pull.rebase = true;

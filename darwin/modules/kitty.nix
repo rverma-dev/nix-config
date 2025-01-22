@@ -2,12 +2,12 @@
 #  Terminal Emulator
 #
 
-{ vars, ... }:
+{ vars, pkgs, ... }:
 
 {
-  homebrew.casks = [
-    "kitty"
-    "font-meslo-lg-nerd-font"
+  environment.systemPackages = [
+    pkgs.kitty
+    pkgs.meslo-lgs-nf
   ];
 
   home-manager.users.${vars.user} = {
@@ -15,7 +15,7 @@
       ".config/kitty/kitty.conf" = {
         text = ''
           font_family MesloLGS Nerd Font Mono
-          font_size 13
+          font_size 14
 
           background_opacity 0.8
           background_blur 16
