@@ -20,6 +20,18 @@
   environment = {
     systemPackages = with pkgs; [
       zsh-powerlevel10k # Prompt
+      
+      # JDK and Build Tools
+      temurin-bin-17    # OpenJDK 17
+      gradle            # Build tool
+      
+      # Kotlin Development
+      kotlin           # Kotlin compiler and tools
+      kotlin-language-server # LSP for better IDE support
+      ktlint          # Kotlin linter
+      
+      # Optional but useful tools
+      visualvm        # Java profiling and monitoring
     ];
   };
 
@@ -27,6 +39,7 @@
     casks = [
       "cursor"
       "chatgpt"
+      "logi-options+"
     ];
     masApps = {
       "Keynote" = 409183694;
@@ -46,7 +59,7 @@
         # "com.apple.keyboard.fnState" = true;
       };
       dock = {
-        autohide = false;
+        autohide = true;
         autohide-delay = 0.2;
         autohide-time-modifier = 0.1;
         magnification = false;
@@ -55,7 +68,7 @@
         orientation = "bottom";
         showhidden = false;
         show-recents = false;
-        tilesize = 40;
+        tilesize = 32;
         persistent-apps = [
           "/System/Applications/Launchpad.app"
           "/Applications/Safari.app"
@@ -64,7 +77,6 @@
           "/Applications/Nix Apps/Obsidian.app"
           "/Applications/Nix Apps/kitty.app"
           "/Applications/Cursor.app"
-          "/Applications/ChatGPT.app"
           "/System/Applications/System Settings.app"
           "/System/Applications/iPhone Mirroring.app"
         ];

@@ -18,6 +18,10 @@
         kcu = "kubectl config use-context";
         kcg = "kubectl config get-contexts";
         kcd = "kubectl config delete-context";
+        
+        kt = "kotlin";
+        ktc = "kotlinc";
+        gw = "./gradlew";
       };
     };
   };
