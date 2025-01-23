@@ -35,6 +35,13 @@ with lib;
           'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xffa6a6a6 inactive_color=0x00a6a6a6 style=round width=5.0'
         ]
 
+        # Window Rules for Picture-in-Picture
+        [[on-window-detected]]
+        if.app-id = "com.google.Chrome"
+        if.window-title-regex-substring = "Picture[ -]in[ -][Pp]icture"
+        run = "layout floating"
+        check-further-callbacks = true
+
         [gaps]
         inner.horizontal = 8
         inner.vertical = 8
@@ -142,17 +149,6 @@ with lib;
         "8" = "secondary"
         "9" = "secondary"
         "10" = "secondary"
-
-        [[on-window-detected]]
-        if.app-id = "org.mozilla.firefox"
-        if.window-title-regex-substring = "Picture-in-Picture"
-        run = "layout floating"
-
-        [[on-window-detected]]
-        if.app-id = 'com.google.Chrome'
-        if.window-title-regex-substring = 'Picture in Picture'
-        run = 'layout floating'
-        check-further-callbacks = true
       '';
     };
   };

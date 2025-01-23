@@ -19,6 +19,9 @@
         kcg = "kubectl config get-contexts";
         kcd = "kubectl config delete-context";
         
+        # Node.js Development Environment Aliases
+        nodelatest = "nix-shell ${vars.location}/shells/npm/shell.nix --arg nodeVersion \"nodejs\"";
+        
         kt = "kotlin";
         ktc = "kotlinc";
         gw = "./gradlew";

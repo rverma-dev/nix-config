@@ -16,5 +16,4 @@
   ./zsh.nix
   ./nvim.nix
   ./aliases.nix
-  # ./cursor.nix not available on m1<D-s>
 ]

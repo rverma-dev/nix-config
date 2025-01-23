@@ -23,15 +23,24 @@
     variables = {
       EDITOR = "${vars.editor}";
       VISUAL = "${vars.editor}";
+      NPM_CONFIG_PREFIX = "$HOME/.npm-global";  # Set global npm install directory
     };
+    extraInit = ''
+      export PATH="$HOME/.npm-global/bin:$PATH"
+    '';
     systemPackages = with pkgs; [
       eza # Ls
       git # Version Control
       mas # Mac App Store $ mas search <app>
       wget # Download
       jq
+      # node setup
+      nodejs_20    # LTS version
+      nodePackages.npm
       nodePackages.typescript
-      nodejs
+      nodePackages.typescript-language-server
+      yarn-berry
+      # docker setup
       colima
       docker
       docker-compose
@@ -60,7 +69,7 @@
   };
 
   home-manager.users.${vars.user} = {
-    home.stateVersion = "22.05";
+    home.stateVersion = "23.11";
 
     programs.git = {
       enable = true;

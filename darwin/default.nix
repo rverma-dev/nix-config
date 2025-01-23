@@ -28,7 +28,7 @@ let
 in
 {  
   # MacBookAir M1
-  macbook = 
+  rohit-mac = 
     let
       inherit (systemConfig "aarch64-darwin") system pkgs stable;
     in

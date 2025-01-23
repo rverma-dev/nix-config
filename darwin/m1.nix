@@ -1,5 +1,5 @@
 #
-#  Specific system configuration settings for MacBook Air M1 10,1
+#  Specific system configuration settings for MacPro M1
 #
 #  flake.nix
 #   └─ ./darwin
