@@ -1,7 +1,7 @@
 { config, lib, system, pkgs, stable, vars, ... }:
 
 let
-  colors = import ./theming/colors.nix;
+  colors = import ../files/theming/colors.nix;
 
   nvim-spell-nl-utf8-dictionary = builtins.fetchurl {
     url = "https://ftp.nluug.nl/vim/runtime/spell/nl.utf-8.spl";
@@ -16,18 +16,7 @@ in
 {
   environment = {
     systemPackages = with pkgs; [
-      go
-      nodejs
-      (python3.withPackages (ps: with ps; [
-        pip
-      ]))
-      ripgrep
-      # zig
     ];
-    variables = {
-      PATH = "$HOME/.npm-packages/bin:$PATH";
-      NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
-    };
   };
 
   programs.nixvim = {

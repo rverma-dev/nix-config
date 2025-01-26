@@ -2,6 +2,10 @@
 { config, lib, pkgs, vars, ... }:
 
 {
+  environment.systemPackages = [
+    pkgs.meslo-lgs-nf
+  ];
+
   homebrew.casks = [
     "ghostty"
   ];

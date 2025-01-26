@@ -2,16 +2,13 @@
 #  MacOS Modules
 #
 #  flake.nix
-#   └─ ./darwin
-#       ├─ <host>.nix
-#       └─ ./modules
-#           ├─ default.nix *
-#           └─ ...
+#    └─ ./modules
+#       ├─ default.nix *
+#       └─ ...
 #
 
 [
   ./aerospace.nix
-  ./ghostty.nix
   ./kitty.nix
   ./skhd.nix
   ./zsh.nix
