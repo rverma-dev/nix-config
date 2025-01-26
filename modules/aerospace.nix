@@ -32,7 +32,7 @@ with lib;
         enable-normalization-opposite-orientation-for-nested-containers = true
 
         # Accordion layout settings
-        accordion-padding = 30
+        accordion-padding = 0
 
         # Default root container settings
         default-root-container-layout = 'tiles'
@@ -56,25 +56,17 @@ with lib;
         run = "layout floating"
         check-further-callbacks = true
 
-        [[on-window-detected]]
-        if.app-id = "org.mozilla.firefox"
-        if.window-title-regex-substring = "Picture-in-Picture"
-        run = "layout floating"
-
         [gaps]
-        inner.horizontal = 6
-        inner.vertical = 6
-        outer.left = 6
-        outer.bottom = 6
-        outer.top = 6
-        outer.right = 6
+        inner.horizontal = 0
+        inner.vertical = 0
+        outer.left = 0
+        outer.bottom = 0
+        outer.top = 0
+        outer.right = 0
 
         [mode.main.binding]
         # Launch applications
         alt-shift-enter = 'exec-and-forget open -na ${vars.terminal}'
-        alt-shift-g = 'exec-and-forget open -na ghostty'  # Alternative terminal
-        alt-shift-b = 'exec-and-forget open -a "Brave Browser"'
-        alt-shift-f = 'exec-and-forget open -a Finder'
 
         # Window management
         alt-q = "close"
@@ -83,15 +75,15 @@ with lib;
         alt-m = 'fullscreen'
 
         # Focus movement
-        alt-h = 'focus left'
-        alt-j = 'focus down'
-        alt-k = 'focus up'
+        alt-j = 'focus left'
+        alt-k = 'focus down'
+        alt-i = 'focus up'
         alt-l = 'focus right'
 
         # Window movement
-        alt-shift-h = 'move left'
-        alt-shift-j = 'move down'
-        alt-shift-k = 'move up'
+        alt-shift-j = 'move left'
+        alt-shift-k = 'move down'
+        alt-shift-i = 'move up'
         alt-shift-l = 'move right'
 
         # Resize windows

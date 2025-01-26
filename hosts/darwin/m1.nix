@@ -16,13 +16,20 @@
   aerospace.enable = true;
 
   # M1-specific development tools
-  environment.systemPackages = with pkgs; [
-    temurin-bin-17        
-    kotlin           
-    kotlin-language-server 
-    ktlint          
-    visualvm
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      temurin-bin-17        
+      kotlin           
+      kotlin-language-server 
+      ktlint          
+      visualvm
+      obsidian
+    ];
+    variables = {
+      JAVA_HOME = "${pkgs.temurin-bin-17}";
+      JAVA_HOME_17 = "${pkgs.temurin-bin-17}";
+    };
+  };
 
   # M1-specific applications
   homebrew = {
@@ -44,11 +51,11 @@
     "/Applications/Safari.app"
     "/System/Applications/Calendar.app"
     "/Applications/Google Chrome.app"
-    "/Applications/Nix Apps/Obsidian.app"
-    "/Applications/Nix Apps/kitty.app"
+    "${pkgs.obsidian}/Applications/Obsidian.app"
     "/Applications/Cursor.app"
     "/System/Applications/System Settings.app"
     "/System/Applications/iPhone Mirroring.app"
+    "/Applications/Slack.app"
   ];
   system.defaults.dock.persistent-others = ["/Users/${vars.user}/Downloads"];
 }

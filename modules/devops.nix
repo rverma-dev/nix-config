@@ -3,6 +3,8 @@
 
 {
   environment.systemPackages = with pkgs; [
+    jq
+    wget
     # AWS Tools
     saml2aws
     awscli2
@@ -51,5 +53,8 @@
       source = ../files/scripts;
       executable = true;
     };
+    home.sessionPath = [
+      "$HOME/.local/bin"
+    ];
   };
 } 

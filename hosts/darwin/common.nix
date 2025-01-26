@@ -105,14 +105,7 @@
       eza # Ls
       git # Version Control
       mas # Mac App Store $ mas search <app>
-      wget # Download
-      jq
-      awscli2
-      kubectl
       just
-      # ui packages
-      obsidian
-      raycast
     ];
   };
 
