@@ -15,7 +15,6 @@
   ./nvim.nix
   ./aliases.nix
   ./direnv.nix
-  ./node.nix
   ./docker.nix
   ./go.nix
   ./devops.nix
