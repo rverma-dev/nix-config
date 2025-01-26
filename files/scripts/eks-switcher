@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""
+Utility for switching between EKS clusters and updating kubeconfig.
+"""
+
+import json
+import subprocess
+import sys
+from typing import List, Dict
+
+
+def check_dependencies():
+    """Check if required CLI tools are installed."""
+    for cmd in ["aws", "kubectl"]:
+        try:
+            subprocess.run([cmd, "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        except FileNotFoundError:
+            print(f"Error: {cmd} is not installed. Please install it first.")
+            sys.exit(1)
+
+
+def get_eks_clusters() -> List[Dict]:
+    """Get list of EKS clusters in the current AWS region."""
+    try:
+        result = subprocess.run(
+            ["aws", "eks", "list-clusters"],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0:
+            print(f"Error listing clusters: {result.stderr}")
+            sys.exit(1)
+
+        data = json.loads(result.stdout)
+        clusters = []
+        
+        for cluster_name in data.get("clusters", []):
+            # Get detailed cluster info
+            result = subprocess.run(
+                ["aws", "eks", "describe-cluster", "--name", cluster_name],
+                capture_output=True,
+                text=True
+            )
+            if result.returncode == 0:
+                cluster_info = json.loads(result.stdout)
+                clusters.append(cluster_info["cluster"])
+                
+        return clusters
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+
+
+def update_kubeconfig(cluster_name: str, region: str):
+    """Update kubeconfig for the selected cluster."""
+    try:
+        result = subprocess.run(
+            ["aws", "eks", "update-kubeconfig", "--name", cluster_name, "--region", region],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0:
+            print(f"Error updating kubeconfig: {result.stderr}")
+            sys.exit(1)
+        print(f"\nSuccessfully updated kubeconfig for cluster {cluster_name}")
+        
+        # Test the connection
+        result = subprocess.run(
+            ["kubectl", "get", "nodes"],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode == 0:
+            print("\nCluster connection test successful!")
+            print("\nAvailable nodes:")
+            print(result.stdout)
+        else:
+            print("\nWarning: Could not connect to cluster. Please check your AWS credentials and VPN status.")
+            
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+
+
+def main():
+    """Main function."""
+    check_dependencies()
+    
+    try:
+        print("Fetching EKS clusters...")
+        clusters = get_eks_clusters()
+        
+        if not clusters:
+            print("No EKS clusters found in the current region.")
+            sys.exit(0)
+        
+        print("\nAvailable clusters:")
+        for i, cluster in enumerate(clusters, 1):
+            name = cluster["name"]
+            version = cluster["version"]
+            region = cluster["arn"].split(":")[3]
+            status = cluster["status"]
+            print(f"{i}. {name} (K8s {version}) - {region} - {status}")
+        
+        while True:
+            try:
+                choice = int(input("\nSelect cluster number: "))
+                if 1 <= choice <= len(clusters):
+                    selected = clusters[choice - 1]
+                    region = selected["arn"].split(":")[3]
+                    update_kubeconfig(selected["name"], region)
+                    break
+                else:
+                    print("Invalid selection. Please try again.")
+            except ValueError:
+                print("Please enter a number.")
+                
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user.")
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    main() 

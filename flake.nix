@@ -2,18 +2,16 @@
 #  flake.nix *
 #   ├─ ./hosts
 #   │   └─ default.nix
-#   ├─ ./darwin
-#   │   └─ default.nix
-#   └─ ./nix
+#   ├─ ./hosts/darwin
 #       └─ default.nix
-#
+
 
 {
   description = "Nix Darwin System Flake Configuration for M1 MacOS";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Nix Packages (Default)
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05"; # Stable Nix Packages
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11"; # Stable Nix Packages
 
     # User Environment Manager
     home-manager = {
@@ -70,7 +68,7 @@
     in
     {
       darwinConfigurations = (
-        import ./darwin {
+        import ./hosts/darwin {
           inherit (nixpkgs) lib;
           inherit inputs nixpkgs nixpkgs-stable home-manager darwin nur nixvim vars nix-homebrew homebrew-core homebrew-cask homebrew-bundle;
         }

@@ -2,10 +2,11 @@
 #  These are the different profiles that can be used when building on MacOS
 #
 #  flake.nix
-#   └─ ./darwin
-#       ├─ default.nix *
-#       ├─ darwin-configuraiton.nix
-#       └─ <host>.nix
+#   └─ ./hosts
+#       └─ ./darwin
+#           ├─ default.nix *
+#           ├─ common.nix
+#           └─ <host>.nix
 #
 
 { inputs, nixpkgs, nixpkgs-stable, darwin, home-manager, nixvim, vars, nix-homebrew, homebrew-core, homebrew-cask, homebrew-bundle, ... }:
@@ -27,8 +28,8 @@ let
   };
 in
 {  
-  # MacBookAir M1
-  rohit-mac = 
+  # MacBook Pro M1
+  RohitVerma-Apple-Macbook = 
     let
       inherit (systemConfig "aarch64-darwin") system pkgs stable;
     in
@@ -36,7 +37,7 @@ in
       inherit system;
       specialArgs = { inherit inputs system pkgs stable vars; };
       modules = [
-        ./darwin-configuration.nix
+        ./common.nix
         ./m1.nix
         nixvim.nixDarwinModules.nixvim
         home-manager.darwinModules.home-manager
@@ -53,8 +54,8 @@ in
             autoMigrate = true;
             taps = {
               "homebrew/homebrew-core" = homebrew-core;
-              "homebrew/homebrew-cask" = homebrew-cask;
-              "homebrew/homebrew-bundle" = homebrew-bundle;
+              # "homebrew/homebrew-cask" = homebrew-cask;
+              # "homebrew/homebrew-bundle" = homebrew-bundle;
             };
           };
         }
