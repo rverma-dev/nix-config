@@ -34,7 +34,7 @@
 
         # Lay out Node.js environment
         layout_node() {
-          NODE_VERSION="''${1:-20}"
+          NODE_VERSION="''${1:-22}"
           export NODE_VERSION
           export NODE_PATH="$PWD/.direnv/node_modules"
           export NPM_CONFIG_PREFIX="$PWD/.direnv/npm-global"

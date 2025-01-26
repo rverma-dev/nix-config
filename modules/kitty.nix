@@ -8,7 +8,7 @@
   # Install Kitty through home-manager for better integration
   home-manager.users.${vars.user} = {
     programs.kitty = {
-      enable = false;
+      enable = true;
       font = {
         name = "MesloLGS Nerd Font Mono";
         size = 14;

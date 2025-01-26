@@ -43,20 +43,11 @@ in
         home-manager.darwinModules.home-manager
         nix-homebrew.darwinModules.nix-homebrew
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          
-          # Homebrew Configuration
           nix-homebrew = {
             enable = true;
             enableRosetta = true;
             user = "${vars.user}";
             autoMigrate = true;
-            taps = {
-              "homebrew/homebrew-core" = homebrew-core;
-              # "homebrew/homebrew-cask" = homebrew-cask;
-              # "homebrew/homebrew-bundle" = homebrew-bundle;
-            };
           };
         }
       ];

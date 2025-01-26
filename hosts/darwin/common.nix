@@ -80,14 +80,23 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-  };
+    users.${vars.user} = {
+      home.stateVersion = "23.11";
 
-  # Common nix-homebrew configuration
-  nix-homebrew = {
-    enable = true;
-    enableRosetta = true;
-    user = "${vars.user}";
-    autoMigrate = true;
+      programs = {
+        git = {
+          enable = true;
+          userName = "Rohit Verma";
+          userEmail = "rohit.verma@jupiter.money";
+
+          extraConfig = {
+            init.defaultBranch = "main";
+            pull.rebase = true;
+            push.autoSetupRemote = true;
+          };
+        };
+      };
+    };
   };
 
   users.users.${vars.user} = {
@@ -119,22 +128,6 @@
     };
     casks = [];
     masApps = {};
-  };
-
-  home-manager.users.${vars.user} = {
-    home.stateVersion = "23.11";
-
-    programs.git = {
-      enable = true;
-      userName = "Rohit Verma";  # Replace with your name
-      userEmail = "rohit.verma@jupiter.money";  # Replace with your email
-
-      extraConfig = {
-        init.defaultBranch = "main";
-        pull.rebase = true;
-        push.autoSetupRemote = true;
-      };
-    };
   };
 
   services.nix-daemon.enable = true;
