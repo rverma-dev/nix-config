@@ -6,9 +6,8 @@
     jq
     wget
     # AWS Tools
-    saml2aws
     awscli2
-    aws-vault
+    granted
     ssm-session-manager-plugin
 
     # Kubernetes Tools
@@ -40,11 +39,6 @@
     # argocd
   ];
 
-  environment.variables = {
-    AWS_REGION = "ap-south-1";  # Default AWS region
-    SAML2AWS_SESSION_DURATION = "3600";
-    KUBECONFIG = "$HOME/.kube/config";
-  };
 
   # Create scripts directory
   home-manager.users.${vars.user} = {

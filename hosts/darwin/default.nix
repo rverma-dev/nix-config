@@ -29,7 +29,7 @@ let
 in
 {  
   # MacBook Pro M1
-  RohitVerma-Apple-Macbook = 
+  RohitVerma-Apple-Macbook-M1 = 
     let
       inherit (systemConfig "aarch64-darwin") system pkgs stable;
     in

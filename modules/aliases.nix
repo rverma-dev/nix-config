@@ -6,7 +6,7 @@
     programs.zsh = {
       enable = true;
       shellAliases = {
-        
+        assume = "source assume";
         # Docker Aliases
         d = "docker";
         dc = "docker-compose";
@@ -18,7 +18,7 @@
         kcu = "kubectl config use-context";
         kcg = "kubectl config get-contexts";
         kcd = "kubectl config delete-context";
-        
+
         # Node.js Development Environment Aliases
         nodelatest = "nix-shell ${vars.location}/shells/npm/shell.nix --arg nodeVersion \"nodejs\"";
         
