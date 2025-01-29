@@ -24,6 +24,7 @@
     terraform-ls
     terragrunt
     tflint
+    testkube
     
     # Development Tools
     jq
