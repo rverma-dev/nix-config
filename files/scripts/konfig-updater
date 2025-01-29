@@ -9,7 +9,7 @@ Features:
 - Cluster Listing: For each account and predefined region, lists all EKS clusters using the AWS CLI.
 - Kubeconfig Update: Updates the kubeconfig file for each discovered cluster, facilitating
   Kubernetes cluster management.
-- Region Support: Currently supports 'eu-west-1' and 'eu-central-1' regions.
+- Region Support: Currently supports 'ap-south-1' and 'ap-south-2' regions.
 
 
 Dependencies:
@@ -31,7 +31,7 @@ import os
 import shutil
 import subprocess
 
-regions = ["eu-west-1", "eu-central-1", "us-east-1", "ap-southeast-1"]
+regions = ["ap-south-1", "ap-south-2"]
 
 
 def check_dependencies():

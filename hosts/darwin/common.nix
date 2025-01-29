@@ -72,79 +72,21 @@
         };
         "~/Library/Preferences/ByHost/com.apple.controlcenter".BatteryShowPercentage = true;
         "com.apple.AdLib".allowApplePersonalizedAdvertising = false;
-        # "com.apple.Safari" = {
-        #   # Privacy: don’t send search queries to Apple
-        #   UniversalSearchEnabled = false;
-        #   SuppressSearchSuggestions = true;
-        #   # Press Tab to highlight each item on a web page
-        #   WebKitTabToLinksPreferenceKey = true;
-        #   ShowFullURLInSmartSearchField = true;
-        #   # Prevent Safari from opening ‘safe’ files automatically after downloading
-        #   AutoOpenSafeDownloads = false;
-        #   ShowFavoritesBar = false;
-        #   IncludeInternalDebugMenu = true;
-        #   IncludeDevelopMenu = true;
-        #   WebKitDeveloperExtrasEnabledPreferenceKey = true;
-        #   WebContinuousSpellCheckingEnabled = true;
-        #   WebAutomaticSpellingCorrectionEnabled = false;
-        #   AutoFillFromAddressBook = false;
-        #   AutoFillCreditCardData = false;
-        #   AutoFillMiscellaneousForms = false;
-        #   WarnAboutFraudulentWebsites = true;
-        #   WebKitJavaEnabled = false;
-        #   WebKitJavaScriptCanOpenWindowsAutomatically = false;
-        #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
-        #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
-        #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
-        #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
-        #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
-        #   "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
-        # };
       };
     };
   };
 
-  # Common home-manager configuration
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.${vars.user} = {
-      home.stateVersion = "23.11";
-
-      programs = {
-        git = {
-          enable = true;
-          userName = "Rohit Verma";
-          userEmail = "rohit.verma@jupiter.money";
-
-          extraConfig = {
-            init.defaultBranch = "main";
-            pull.rebase = true;
-            push.autoSetupRemote = true;
-          };
-        };
-      };
-    };
-  };
-
+  # User configuration
   users.users.${vars.user} = {
     home = "/Users/${vars.user}";
-    shell = pkgs.zsh;
   };
 
-  environment = {
-    variables = {
-      EDITOR = "${vars.editor}";
-      VISUAL = "${vars.editor}";
-    };
-    systemPackages = with pkgs; [
-      git # Version Control
-      mas # Mac App Store $ mas search <app>
-    ];
-  };
+  # Common system packages
+  environment.systemPackages = with pkgs; [
+    mas # Mac App Store CLI
+  ];
 
-  programs.zsh.enable = true;
-
+  # Homebrew configuration
   homebrew = {
     enable = true;
     onActivation = {
@@ -155,6 +97,7 @@
     masApps = {};
   };
 
+  # Nix configuration
   services.nix-daemon.enable = true;
 
   nix = {
@@ -165,12 +108,9 @@
       options = "--delete-older-than 7d";
     };
     extraOptions = ''
-      # auto-optimise-store = true
       experimental-features = nix-command flakes
     '';
   };
 
-  system = {
-    stateVersion = 5;
-  };
+  system.stateVersion = 5;
 }

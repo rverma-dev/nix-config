@@ -17,6 +17,6 @@
   ./go.nix
   ./devops.nix
   ./tools.nix
-  ./aliases.nix
-  # ./raycast.nix
+  ./git.nix
+  # ./vpn.nix
 ]

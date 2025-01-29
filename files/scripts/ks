@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
 """
 The script is designed to run in environments where Kubernetes clusters are managed through AWS
-and access is controlled via SAML authentication. It automates the process of logging into the
-appropriate AWS account and setting up the shell environment for further interactions with AWS services.
+and access is controlled via AWS SSO authentication using granted. It automates the process of 
+switching to the appropriate AWS profile and setting up the shell environment for further 
+interactions with AWS services.
 
 Key functionalities include:
-- Checking if 'saml2aws' and 'kubectl' are installed on the system.
+- Checking if 'granted' and 'kubectl' are installed on the system.
 - Executes 'kubectl ctx' to switch to specific kubernets context.
 - Retrieving the current Kubernetes context and extracting the associated AWS account number.
 - Parsing the AWS configuration file to find the relevant profile.
 - Finding the correct profile name by matching the account number in the AWS configuration.
-- Executing the 'saml2aws' command with the identified profile to set up the shell environment.
+- Using 'assume' command to set up the shell environment with the correct AWS profile.
 
 Dependencies:
-- saml2aws: A tool for logging into an AWS account.
+- granted: A tool for AWS SSO authentication and profile management.
 - kubectl: A command-line tool for interacting with Kubernetes clusters.
 - Python 3 and standard libraries: configparser, os, re, subprocess.
 
@@ -38,8 +39,8 @@ def check_dependencies():
     Check if required command-line tools are installed.
     """
     try:
-        for command in ["saml2aws", "kubectl"]:
-            subprocess.run([command, "help"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        for command in ["granted", "kubectl"]:
+            subprocess.run([command, "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     except FileNotFoundError:
         print(f"Error: The command '{command}' is not found. Please install it before proceeding.")
         exit(1)
@@ -51,7 +52,7 @@ def select_context():
         subprocess.run(["kubectl", "ctx"])
 
     except subprocess.CalledProcessError as e:
-        print(f"Error: kubectl ctx failed with an erro: {e}")
+        print(f"Error: kubectl ctx failed with an error: {e}")
         exit(-1)
 
 
@@ -93,16 +94,16 @@ def find_profile_name(config, account_number):
     return None
 
 
-def execute_saml2aws_command(profile_name):
-    """Execute the saml2aws command with the found values."""
+def execute_assume_command(profile_name):
+    """Execute the assume command with the found profile."""
     shell = os.getenv("SHELL", "/bin/zsh")
 
     try:
-        subprocess.run(["saml2aws", "exec", "--exec-profile", profile_name, shell], check=True)
-    except subprocess.CalledProcessError:
-        print("Existing credentials failed, attempting new login")
-        subprocess.run(["saml2aws", "login", "--skip-prompt"], check=True)
-        subprocess.run(["saml2aws", "exec", "--exec-profile", profile_name, shell], check=True)
+        # Use assume with --exec to run the shell with the correct profile
+        subprocess.run(["assume", profile_name, "--exec", shell], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing assume command: {e}")
+        exit(-1)
 
 
 def main():
@@ -115,7 +116,7 @@ def main():
 
     if profile_name:
         print(f"Profile Name: {profile_name}")
-        execute_saml2aws_command(profile_name)
+        execute_assume_command(profile_name)
     else:
         print("Profile not found for the account number")
         exit(-1)
