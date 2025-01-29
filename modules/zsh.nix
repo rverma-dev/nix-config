@@ -113,12 +113,10 @@
 
           # Kubernetes aliases
           k = "kubectl";
-          kgp = "kubectl get pods";
-          kgs = "kubectl get services";
-          kcu = "kubectl config use-context";
-          kcg = "kubectl config get-contexts";
-          kcd = "kubectl config delete-context";
-
+          kg = "kubectl get";
+          kns = "kubecns";
+          kcx = "kubectx";
+          
           # Development aliases
           kt = "kotlin";
           ktc = "kotlinc";

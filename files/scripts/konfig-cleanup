@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+"""
+Utility for cleaning up kubeconfig by removing ARN prefixes from cluster names.
+Specifically removes 'arn:aws:eks:<region>:<account>:cluster/' from cluster names.
+"""
+
+import yaml
+import os
+import re
+import sys
+
+def load_kubeconfig():
+    """Load the kubeconfig file."""
+    kubeconfig_path = os.path.expanduser("~/.kube/config")
+    try:
+        with open(kubeconfig_path, 'r') as f:
+            return yaml.safe_load(f)
+    except FileNotFoundError:
+        print(f"Error: Kubeconfig not found at {kubeconfig_path}")
+        sys.exit(1)
+    except yaml.YAMLError as e:
+        print(f"Error parsing kubeconfig: {e}")
+        sys.exit(1)
+
+def save_kubeconfig(config):
+    """Save the kubeconfig file."""
+    kubeconfig_path = os.path.expanduser("~/.kube/config")
+    try:
+        with open(kubeconfig_path, 'w') as f:
+            yaml.dump(config, f, default_flow_style=False)
+    except Exception as e:
+        print(f"Error saving kubeconfig: {e}")
+        sys.exit(1)
+
+def clean_cluster_name(name):
+    """Remove ARN prefix from cluster name."""
+    pattern = r"arn:aws:eks:[^:]+:\d+:cluster/(.*)"
+    match = re.match(pattern, name)
+    return match.group(1) if match else name
+
+def cleanup_kubeconfig():
+    """Clean up the kubeconfig file by removing ARN prefixes."""
+    config = load_kubeconfig()
+    changes_made = False
+
+    # Clean up cluster names
+    if 'clusters' in config:
+        for cluster in config['clusters']:
+            old_name = cluster['name']
+            new_name = clean_cluster_name(old_name)
+            if old_name != new_name:
+                cluster['name'] = new_name
+                changes_made = True
+                print(f"Renamed cluster: {old_name} -> {new_name}")
+
+    # Update context references
+    if 'contexts' in config:
+        for context in config['contexts']:
+            old_name = context['context']['cluster']
+            new_name = clean_cluster_name(old_name)
+            if old_name != new_name:
+                context['context']['cluster'] = new_name
+                changes_made = True
+
+            # Also update context name if it contains the ARN
+            if 'name' in context:
+                old_context_name = context['name']
+                new_context_name = clean_cluster_name(old_context_name)
+                if old_context_name != new_context_name:
+                    context['name'] = new_context_name
+                    changes_made = True
+                    print(f"Renamed context: {old_context_name} -> {new_context_name}")
+
+    # Update current-context if it exists
+    if 'current-context' in config:
+        old_current = config['current-context']
+        new_current = clean_cluster_name(old_current)
+        if old_current != new_current:
+            config['current-context'] = new_current
+            changes_made = True
+            print(f"Updated current-context: {old_current} -> {new_current}")
+
+    if changes_made:
+        print("\nSaving changes to kubeconfig...")
+        save_kubeconfig(config)
+        print("Kubeconfig updated successfully!")
+    else:
+        print("No changes needed in kubeconfig.")
+
+def main():
+    """Main function."""
+    try:
+        print("Cleaning up kubeconfig...")
+        cleanup_kubeconfig()
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user.")
+        sys.exit(0)
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main() 

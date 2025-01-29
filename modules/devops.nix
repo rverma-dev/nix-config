@@ -49,6 +49,7 @@
     };
     home.sessionPath = [
       "$HOME/.local/bin"
+      "$HOME/.krew/bin"
     ];
   };
 } 
